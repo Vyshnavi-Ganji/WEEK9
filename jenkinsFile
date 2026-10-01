@@ -17,15 +17,16 @@ pipeline {
         bat 'docker info'
     }
 }
-stage('Docker Login Test') {
+stage('Docker Login') {
     steps {
         withCredentials([usernamePassword(
             credentialsId: 'dockerhub-credentials',
             usernameVariable: 'DOCKER_USERNAME',
             passwordVariable: 'DOCKER_PASSWORD'
         )]) {
-            bat 'echo Username: %DOCKER_USERNAME%'
-            bat 'echo Password length: %DOCKER_PASSWORD:~0,1%****'
+            bat '''
+                echo %DOCKER_PASSWORD% | docker login docker.io -u %DOCKER_USERNAME% --password-stdin
+            '''
         }
     }
 }
