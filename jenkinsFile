@@ -17,6 +17,18 @@ pipeline {
         bat 'docker info'
     }
 }
+stage('Docker Login Test') {
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'dockerhub-credentials',
+            usernameVariable: 'DOCKER_USERNAME',
+            passwordVariable: 'DOCKER_PASSWORD'
+        )]) {
+            bat 'echo Username: %DOCKER_USERNAME%'
+            bat 'echo Password length: %DOCKER_PASSWORD:~0,1%****'
+        }
+    }
+}
 
         stage('push Docker Image to Docker Hub') {
             steps {
