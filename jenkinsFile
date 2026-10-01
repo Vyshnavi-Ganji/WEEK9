@@ -10,13 +10,6 @@ pipeline {
             }
         }
 
-       stage('Test Docker') {
-    steps {
-        bat 'whoami'
-        bat 'docker version'
-        bat 'docker info'
-    }
-}
 stage('Docker Login') {
     steps {
         withCredentials([usernamePassword(
