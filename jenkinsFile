@@ -10,17 +10,13 @@ pipeline {
             }
         }
 
-        stage('Docker Login') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-credentials',
-                    usernameVariable: 'DOCKER_USERNAME',
-                    passwordVariable: 'DOCKER_PASSWORD'
-                )]) {
-                    bat 'echo %DOCKER_PASSWORD% | docker login -u %DOCKER_USERNAME% --password-stdin'
-                }
-            }
-        }
+       stage('Test Docker') {
+    steps {
+        bat 'whoami'
+        bat 'docker version'
+        bat 'docker info'
+    }
+}
 
         stage('push Docker Image to Docker Hub') {
             steps {
